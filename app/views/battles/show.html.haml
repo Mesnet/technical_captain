@@ -1,0 +1,42 @@
+.container
+  .row.justify-content-center
+    .col-12.text-center
+      %h1.text-primary Battle Details
+      %p.text-muted= "Battle ID: #{@battle.id}"
+
+  .row.justify-content-center.mt-4
+    .col-12
+      .card.shadow-lg
+        .card-header.text-center.bg-success.text-white
+          - if @battle.fighters.any? { |fighter| fighter.winner }
+            - winner = @battle.fighters.find { |fighter| fighter.winner }.character
+            %h2 Winner: #{winner.name}
+          - else
+            %h2.text-danger No Winner Yet!
+
+        .card-body
+          %h3.text-center.text-secondary Fighters
+          .row.justify-content-around
+            - @battle.fighters.each do |fighter|
+              .col-12.col-md-4.mb-4
+                .card.shadow
+                  .card-body.text-center
+                    %h4= fighter.character.name
+                    %img{ src: url_for(fighter.character.avatar), class: "img-thumbnail mb-2", style: "width: 150px; height: 150px;" }
+                    %p.text-muted
+                      %strong Attack Points:
+                      = fighter.character.attack_points
+                    %p.text-muted
+                      %strong Precision:
+                      = fighter.character.precision
+                    %p.text-muted
+                      %strong Health:
+                      = fighter.character.health
+                    - if fighter.winner
+                      %span.badge.bg-success Winner
+                    - else
+                      %span.badge.bg-danger Loser
+
+  .row.justify-content-center.mt-4
+    .col-12.text-center
+      = link_to 'Back to Battles', battles_path, class: "btn btn-secondary"

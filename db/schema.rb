@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_12_01_094320) do
+ActiveRecord::Schema[7.0].define(version: 2024_12_01_111337) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,6 +42,11 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_01_094320) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "battles", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "characters", force: :cascade do |t|
     t.string "name", null: false
     t.integer "health", default: 60, null: false
@@ -51,6 +56,18 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_01_094320) do
     t.integer "precision", default: 60, null: false
   end
 
+  create_table "fighters", force: :cascade do |t|
+    t.bigint "character_id", null: false
+    t.bigint "battle_id", null: false
+    t.boolean "winner", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["battle_id"], name: "index_fighters_on_battle_id"
+    t.index ["character_id"], name: "index_fighters_on_character_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "fighters", "battles"
+  add_foreign_key "fighters", "characters"
 end

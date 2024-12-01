@@ -1,0 +1,14 @@
+.container
+  %h1 New Battle
+  - if flash[:alert].present?
+    .alert.alert-danger= flash[:alert]
+
+  = form_with url: battles_path, local: true do |f|
+    %div
+      %label Select Characters
+      = collection_check_boxes(:battle, :character_ids, @characters, :id, :name) do |cb|
+        %div
+          = cb.check_box
+          = cb.label
+    %div.mt-3
+      = f.submit "Start Battle", class: "btn btn-primary"

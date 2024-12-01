@@ -17,6 +17,10 @@
           %h5 💖 Health Points
           %span.badge.bg-success.text-white= @character.health
 
+        .col-12.mb-3
+          %h5 🎯 Precision
+          %span.badge.bg-warning.text-white= @character.precision
+
       .text-center
         %h5 🖼️ Avatar
         - if @character.avatar.attached?
