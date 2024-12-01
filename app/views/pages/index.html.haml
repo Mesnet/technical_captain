@@ -1,6 +1,21 @@
+.container-fluid.text-center.bg-light.min-vh-100.d-flex.flex-column.justify-content-center.align-items-center
+  %h1.text-primary.mt-3 🛡️ Bienvenue dans l'Arène des Combattants 🗡️
+  %p.lead.text-muted Choisissez vos héros, équipez-les et lancez-les dans le combat ultime !
 
-%div.px-4.py-5.my-5.text-center
-  %h1 Bienvenue dans l'Arène des Combattants
-  %p Choisissez vos héros, équipez-les et lancez-les dans le combat ultime !
-  %a.btn.btn-primary(href="/characters/new") Créer un personnage
-  %a.btn.btn-secondary(href="/battles/new") Lancer un combat
+  .row.justify-content-center.mt-4
+    .col-12
+      = link_to '🔥 FIGHT! 🔥', new_battle_path, class: "btn btn-danger btn-lg fw-bold px-5 py-3 shadow-lg"
+
+  .row.justify-content-center.mt-4
+    .col-12
+      .d-flex.justify-content-center.align-items-center.gap-3
+        = link_to '🥷 Characters', characters_path, class: "btn btn-outline-primary btn-sm fw-bold px-4"
+        = link_to '⚔️ Weapons', weapons_path, class: "btn btn-outline-secondary btn-sm fw-bold px-4"
+
+  .row.justify-content-center.mt-4
+    .col-12
+      = link_to '📜 Battle History', battles_path, class: "btn btn-outline-info btn-sm fw-bold px-4"
+
+  .row.justify-content-center.mt-4
+    .col-12
+      %p.text-muted "Prenez garde ! Seuls les plus forts triompheront."

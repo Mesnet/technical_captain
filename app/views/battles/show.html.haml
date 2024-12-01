@@ -1,0 +1,47 @@
+.container-fluid.p-0.p-md-3.d-flex.flex-column.align-items-center
+  .card.shadow-lg.w-100.w-md-50.mt-3
+    .card-header.bg-primary.text-white.text-center.d-flex.justify-content-between.align-items-center
+      = link_to battles_path, class: "text-white me-2" do
+        %i.bi.bi-arrow-left-circle.fs-3
+      %h2.mb-0.flex-grow-1.text-center= "Battle ID: #{@battle.id}"
+      - if @battle.winner
+        %span.badge.bg-success.ms-2 Winner: #{@battle.winner.name}
+
+    .card-body
+      .row.text-center
+        .col-12.mb-3
+          %h5.text-muted Created At: #{@battle.created_at.strftime('%Y-%m-%d %H:%M:%S')}
+
+      .row.justify-content-around.mt-4
+        - @battle.fighters.each do |fighter|
+          .col-12.col-md-5.mb-4r
+            .card.shadow
+              .card-header.text-center
+                %h5= fighter.character.name
+                - if fighter.winner
+                  %span.badge.bg-success Winner
+                - else
+                  %span.badge.bg-danger Loser
+              .card-body.text-center
+                - if fighter.character.avatar.attached?
+                  %img{ src: url_for(fighter.character.avatar), class: "img-thumbnail mb-3", style: "width: 150px; height: 150px;" }
+                - else
+                  %span.badge.bg-secondary.mb-3 No Avatar
+                %p.text-muted
+                  %strong ⚔️ Attack Points:
+                  = fighter.character.attack_points
+                %p.text-muted
+                  %strong 💖 Health:
+                  = fighter.character.health
+                %p.text-muted
+                  %strong 🎯 Precision:
+                  = fighter.character.precision
+              - if fighter.weapons.any?
+                .card-footer
+                  - fighter.weapons.each do |weapon|
+                    .weapon-card.m-2.text-center
+                      - if weapon.icon.attached?
+                        %img{ src: url_for(weapon.icon), class: "img-thumbnail", style: "width: 50px; height: 50px;" }
+                      - else
+                        %span.badge.bg-secondary No Icon
+                      %p.mb-0= weapon.name

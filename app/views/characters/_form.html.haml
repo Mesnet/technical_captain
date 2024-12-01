@@ -1,0 +1,36 @@
+= form_with model: @character, local: true, html: { multipart: true } do |f|
+  - if @character.errors.any?
+    .alert.alert-danger
+      %h4 There were errors with your submission:
+      %ul
+        - @character.errors.full_messages.each do |message|
+          %li= message
+
+  .mb-3
+    = f.label :name, "🎭 Hero Name", class: "form-label"
+    = f.text_field :name, class: "form-control border-primary", placeholder: "Enter an epic name..."
+
+  .mb-3
+    = f.label :attack_points, "⚔️ Attack Points", class: "form-label"
+    %span#attack_points_value.badge.bg-danger.text-white.mt-2= @character.attack_points
+    %input#attack_points_slider{ type: "range", name: "character[attack_points]", min: 0, max: 100, value: @character.attack_points, class: "form-range" }
+
+  .mb-3
+    = f.label :health, "💖 Health Points", class: "form-label"
+    %span#health_value.badge.bg-success.text-white.mt-2= @character.health
+    %input#health_slider{ type: "range", name: "character[health]", min: 0, max: 100, value: @character.health, class: "form-range" }
+
+  .mb-3
+    = f.label :precision, "🎯 Precision", class: "form-label"
+    %input#precision_slider{ type: "range", name: "character[precision]", min: 0, max: 100, value: @character.precision, class: "form-range" }
+    %span#precision_value.badge.bg-primary.text-white.mt-2= @character.precision
+
+  .mb-3
+    = f.label :avatar, "🖼️ Profile Picture", class: "form-label"
+    = f.file_field :avatar, class: "form-control border-info"
+    - if @character.avatar.attached?
+      .mt-3
+        %h5 Your Current Avatar:
+        %img{ src: url_for(@character.avatar), alt: "Profile Picture", class: "img-thumbnail border border-info", style: "max-width: 200px;" }
+
+  = f.submit "⚡ Save Your Hero ⚡", class: "btn btn-success btn-lg mt-3 float-right"

@@ -1,0 +1,26 @@
+.container-fluid.p-0
+  .bg-primary.text-white.d-flex.align-items-center.justify-content-between.px-3.py-2
+    = link_to root_path, class: "text-white text-decoration-none" do
+      %i.bi.bi-arrow-left-circle.fs-3
+
+    %h2.mb-0.text-center.flex-grow-1= "🛡️ Weapons ⚔️"
+
+  .container.p-3
+    %ul.list-group.mb-4
+      - @weapons.each do |weapon|
+        %li.list-group-item.d-flex.justify-content-between.align-items-center
+          .d-flex.align-items-center
+            - if weapon.icon.attached?
+              %img{ src: url_for(weapon.icon), alt: "Icon", class: "img-thumbnail me-3", style: "max-width: 50px;" }
+            - else
+              %span.badge.bg-secondary.me-3 No Icon
+            %div
+              %h5.mb-0= weapon.name
+              %small.text-muted 💖 Health: #{weapon.health} | ⚔️ Attack: #{weapon.attack_points} | 🎯 Precision: #{weapon.precision}
+          .d-flex.align-items-center
+            = link_to "View", weapon_path(weapon), class: "btn btn-sm btn-primary me-2"
+            = link_to "Edit", edit_weapon_path(weapon), class: "btn btn-sm btn-warning me-2"
+            = link_to "Delete", weapon_path(weapon), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-danger"
+
+    .text-center
+      = link_to "🛠️ Add New Weapon", new_weapon_path, class: "btn btn-success btn-lg"

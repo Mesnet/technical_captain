@@ -1,0 +1,29 @@
+.container-fluid.p-0.p-md-3.d-flex.flex-column.align-items-center
+  .card.shadow-lg.w-100.w-md-50.mt-3
+    .card-header.bg-primary.text-white.text-center.d-flex.justify-content-between.align-items-center
+      = link_to weapons_path, class: "text-white me-2" do
+        %i.bi.bi-arrow-left-circle.fs-3
+      %h2.mb-0.flex-grow-1.text-center= @weapon.name
+      = link_to edit_weapon_path(@weapon), class: "text-white ms-2" do
+        %i.bi.bi-pencil.fs-3
+
+    .card-body
+      .row.text-center
+        .col-12.mb-3
+          %h5 ⚔️ Attack Points
+          %span.badge.bg-danger.text-white= @weapon.attack_points
+
+        .col-12.mb-3
+          %h5 💖 Health Points
+          %span.badge.bg-success.text-white= @weapon.health
+
+        .col-12.mb-3
+          %h5 🎯 Precision
+          %span.badge.bg-warning.text-white= @weapon.precision
+
+      .text-center
+        %h5 🖼️ Icon
+        - if @weapon.icon.attached?
+          %img{ src: url_for(@weapon.icon), alt: "Weapon Icon", class: "img-thumbnail border border-info mt-3", style: "max-width: 200px;" }
+        - else
+          %p No icon uploaded

@@ -1,0 +1,38 @@
+.container-fluid.p-0.p-md-3.d-flex.flex-column.align-items-center
+  .card.shadow-lg.w-100.w-md-50.mt-3
+    .card-header.bg-primary.text-white.text-center.d-flex.justify-content-between.align-items-center
+      = link_to characters_path, class: "text-white me-2" do
+        %i.bi.bi-arrow-left-circle.fs-3
+      %h2.mb-0.flex-grow-1.text-center= @character.name
+      = link_to edit_character_path(@character), class: "text-white ms-2" do
+        %i.bi.bi-pencil.fs-3
+
+    .card-body
+      .row.text-center
+        .col-4.mb-3
+          .text-center
+          - if @character.avatar.attached?
+            %img{ src: url_for(@character.avatar), alt: "Avatar", class: "img-thumbnail border border-info mt-3", style: "max-width: 200px;" }
+          - else
+            %p No avatar uploaded
+        .col-4.mt-3
+          .col-12.mb-3
+            %h5 ⚔️ Attack Points
+            %span.badge.bg-danger.text-white= @character.attack_points
+
+          .col-12.mb-3
+            %h5 💖 Health Points
+            %span.badge.bg-success.text-white= @character.health
+
+          .col-12.mb-3
+            %h5 🎯 Precision
+            %span.badge.bg-warning.text-white= @character.precision
+        .col-4.mb-3
+          .text-center
+            %h5.text-primary STATS
+            .mt-3
+              %p Total Fights:
+              %span.badge.bg-secondary.text-white= @total_fights
+            .mt-3
+              %p Winning Rate:
+              %span.badge.bg-primary.text-white= "#{@win_rate}%"

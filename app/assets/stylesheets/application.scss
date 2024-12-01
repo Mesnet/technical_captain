@@ -13,5 +13,19 @@
  *= require_tree .
  *= require_self
  */
-
  @import "bootstrap";
+
+// New Battle Page
+.character-card {
+  cursor: pointer; /* Show pointer cursor on hover */
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth hover effects */
+}
+
+.character-card:hover {
+  transform: scale(1.05); /* Slightly enlarge the card */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Add a shadow */
+}
+
+.character-card.border-success {
+  border: 5px solid #28a745; /* Green border for active state */
+}

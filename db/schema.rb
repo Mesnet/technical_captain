@@ -10,5 +10,86 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 0) do
+ActiveRecord::Schema[7.0].define(version: 2024_12_01_161119) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.string "service_name", null: false
+    t.bigint "byte_size", null: false
+    t.string "checksum"
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "active_storage_variant_records", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.string "variation_digest", null: false
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "battles", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "characters", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "health", default: 60, null: false
+    t.integer "attack_points", default: 60, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "precision", default: 60, null: false
+    t.integer "battle_experience", default: 1, null: false
+  end
+
+  create_table "fighter_weapons", force: :cascade do |t|
+    t.bigint "fighter_id", null: false
+    t.bigint "weapon_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["fighter_id"], name: "index_fighter_weapons_on_fighter_id"
+    t.index ["weapon_id"], name: "index_fighter_weapons_on_weapon_id"
+  end
+
+  create_table "fighters", force: :cascade do |t|
+    t.bigint "character_id", null: false
+    t.bigint "battle_id", null: false
+    t.boolean "winner", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["battle_id", "character_id"], name: "index_fighters_on_battle_id_and_character_id", unique: true
+    t.index ["battle_id"], name: "index_fighters_on_battle_id"
+    t.index ["character_id"], name: "index_fighters_on_character_id"
+  end
+
+  create_table "weapons", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "health", default: 0, null: false
+    t.integer "attack_points", default: 0, null: false
+    t.integer "precision", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "fighter_weapons", "fighters"
+  add_foreign_key "fighter_weapons", "weapons"
+  add_foreign_key "fighters", "battles"
+  add_foreign_key "fighters", "characters"
 end

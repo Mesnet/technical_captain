@@ -1,0 +1,36 @@
+= form_with model: @weapon, local: true do |f|
+  - if @weapon.errors.any?
+    .alert.alert-danger
+      %h4 There were errors with your submission:
+      %ul
+        - @weapon.errors.full_messages.each do |message|
+          %li= message
+
+  .mb-3
+    = f.label :name, "🛠️ Weapon Name", class: "form-label"
+    = f.text_field :name, class: "form-control border-primary", placeholder: "Enter the weapon's name..."
+
+  .mb-3
+    = f.label :attack_points, "⚔️ Attack Points", class: "form-label"
+    %span#attack_points_value.badge.bg-danger.text-white.mt-2= @weapon.attack_points
+    %input#attack_points_slider{ type: "range", name: "weapon[attack_points]", min: 0, max: 100, value: @weapon.attack_points, class: "form-range" }
+
+  .mb-3
+    = f.label :health, "💖 Health Points", class: "form-label"
+    %span#health_value.badge.bg-success.text-white.mt-2= @weapon.health
+    %input#health_slider{ type: "range", name: "weapon[health]", min: 0, max: 100, value: @weapon.health, class: "form-range" }
+
+  .mb-3
+    = f.label :precision, "🎯 Precision", class: "form-label"
+    %span#precision_value.badge.bg-primary.text-white.mt-2= @weapon.precision
+    %input#precision_slider{ type: "range", name: "weapon[precision]", min: 0, max: 100, value: @weapon.precision, class: "form-range" }
+
+  .mb-3
+    = f.label :icon, "🖼️ Weapon Icon", class: "form-label"
+    = f.file_field :icon, class: "form-control border-info"
+    - if @weapon.icon.attached?
+      .mt-3
+        %h5 Current Icon:
+        %img{ src: url_for(@weapon.icon), alt: "Weapon Icon", class: "img-thumbnail border border-info", style: "max-width: 200px;" }
+
+  = f.submit "⚡ Save Your Weapon ⚡", class: "btn btn-success btn-lg mt-3 float-right"
