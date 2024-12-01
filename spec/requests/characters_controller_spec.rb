@@ -18,7 +18,14 @@ RSpec.describe CharactersController, type: :request do
   end
 
   describe 'POST #create' do
-    let(:character_params) { { attack_points: character.attack_points, health: character.health, name: character.name } }
+    let(:character_params) do
+      {
+        name: 'Test Character',
+        health: 60,
+        attack_points: 60,
+        precision: 60
+      }
+    end
 
     it 'creates a new character' do
       expect {
