@@ -4,4 +4,5 @@ class Fighter < ApplicationRecord
   has_many :fighter_weapons, dependent: :destroy
   has_many :weapons, through: :fighter_weapons
 
+  validates :character_id, uniqueness: { scope: :battle_id, message: "can only participate once per battle" }
 end

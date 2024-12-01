@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_12_01_122255) do
+ActiveRecord::Schema[7.0].define(version: 2024_12_01_161119) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -54,6 +54,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_01_122255) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "precision", default: 60, null: false
+    t.integer "battle_experience", default: 1, null: false
   end
 
   create_table "fighter_weapons", force: :cascade do |t|
@@ -71,6 +72,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_01_122255) do
     t.boolean "winner", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["battle_id", "character_id"], name: "index_fighters_on_battle_id_and_character_id", unique: true
     t.index ["battle_id"], name: "index_fighters_on_battle_id"
     t.index ["character_id"], name: "index_fighters_on_character_id"
   end
