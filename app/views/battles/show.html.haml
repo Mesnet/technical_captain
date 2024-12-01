@@ -12,10 +12,10 @@
         .col-12.mb-3
           %h5.text-muted Created At: #{@battle.created_at.strftime('%Y-%m-%d %H:%M:%S')}
 
-      .row.justify-content-around.mt-4
+      .row.row-cols-1.row-cols-md-4.g-4.justify-content-around.mt-4
         - @battle.fighters.each do |fighter|
-          .col-12.col-md-5.mb-4r
-            .card.shadow
+          .col
+            .card.shadow.mb-2
               .card-header.text-center
                 %h5= fighter.character.name
                 - if fighter.winner
@@ -30,14 +30,25 @@
                 %p.text-muted
                   %strong ⚔️ Attack Points:
                   = fighter.character.attack_points
+                  - total_attack = fighter.weapons.sum(&:attack_points)
+                  - if total_attack > 0
+                    %span.text-success.fw-bold.fs-6.ms-1 +#{total_attack}
+
                 %p.text-muted
                   %strong 💖 Health:
                   = fighter.character.health
+                  - total_health = fighter.weapons.sum(&:health)
+                  - if total_health > 0
+                    %span.text-success.fw-bold.fs-6.ms-1 +#{total_health}
+
                 %p.text-muted
                   %strong 🎯 Precision:
                   = fighter.character.precision
+                  - total_precision = fighter.weapons.sum(&:precision)
+                  - if total_precision > 0
+                    %span.text-success.fw-bold.fs-6.ms-1 +#{total_precision}
               - if fighter.weapons.any?
-                .card-footer
+                .card-footer.d-flex.flex-wrap.justify-content-center
                   - fighter.weapons.each do |weapon|
                     .weapon-card.m-2.text-center
                       - if weapon.icon.attached?

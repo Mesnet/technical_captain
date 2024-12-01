@@ -6,7 +6,7 @@ class BattlesController < ApplicationController
 
   # GET /battles/1 or /battles/1.json
   def show
-    @battle = Battle.includes(fighters: :character).find(params[:id])
+    @battle = Battle.includes(fighters: [:character, :weapons]).find(params[:id])
   end
 
   # GET /battles/new

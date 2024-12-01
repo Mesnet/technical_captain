@@ -27,15 +27,15 @@ const initializeSelectFightersForm = () => {
           selectedFighters = selectedFighters.filter((fighter) => fighter.character_id !== characterId);
           card.classList.remove("border-success");
           weaponButtons.forEach((btn) => {
-            btn.disabled = true;
-            btn.classList.remove("btn-primary");
+            btn.classList.remove("btn-success");
             btn.classList.add("btn-outline-secondary");
           });
+          weaponsContainer.classList.add("d-none");
         } else {
           // Select Character
           selectedFighters.push({ character_id: characterId, weapon_ids: [] });
           card.classList.add("border-success");
-          weaponButtons.forEach((btn) => (btn.disabled = false));
+          weaponsContainer.classList.remove("d-none");
         }
 
         updateFightersInput();
@@ -54,12 +54,12 @@ const initializeSelectFightersForm = () => {
             if (isSelected) {
               // Deselect Weapon
               fighter.weapon_ids = fighter.weapon_ids.filter((id) => id !== weaponId);
-              btn.classList.remove("btn-primary");
+              btn.classList.remove("btn-success");
               btn.classList.add("btn-outline-secondary");
             } else {
               // Select Weapon
               fighter.weapon_ids.push(weaponId);
-              btn.classList.add("btn-primary");
+              btn.classList.add("btn-success");
               btn.classList.remove("btn-outline-secondary");
             }
 
@@ -68,8 +68,7 @@ const initializeSelectFightersForm = () => {
         });
       });
 
-      // Disable Weapon Buttons by Default
-      weaponButtons.forEach((btn) => (btn.disabled = true));
+      weaponsContainer.classList.add("d-none");
     });
 
 
