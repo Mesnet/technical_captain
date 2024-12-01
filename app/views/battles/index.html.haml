@@ -1,21 +1,18 @@
-.container
-  .row.justify-content-center
-    .col-12.text-center
-      %h1.text-primary Battle History
-      %p.text-muted= "View all battles and their results below."
+.container-fluid.p-0
+  .bg-primary.text-white.d-flex.align-items-center.justify-content-between.px-3.py-2
+    = link_to root_path, class: "text-white text-decoration-none" do
+      %i.bi.bi-arrow-left-circle.fs-3
 
-  .row.justify-content-center.mt-4
-    .col-12
-      %ul.list-group
-        - @battles.each do |battle|
-          %li.list-group-item.d-flex.justify-content-between.align-items-center
-            .d-flex.flex-column
-              %strong Battle ID: #{battle.id}
-              %small.text-muted= "Created At: #{battle.created_at.strftime("%Y-%m-%d %H:%M:%S")}"
-            .d-flex.align-items-center
-              - if battle.fighters.any? { |fighter| fighter.winner }
-                - winner = battle.fighters.find { |fighter| fighter.winner }.character
-                %span.badge.bg-success.me-2 Winner: #{winner.name}
-              - else
-                %span.badge.bg-danger.me-2 No Winner Yet
-              = link_to "View", battle_path(battle), class: "btn btn-sm btn-primary"
+    %h2.mb-0.text-center.flex-grow-1= "🛡️ Battle History ⚔️"
+
+  .container.p-3
+    %ul.list-group.mb-4
+      - @battles.each do |battle|
+        %li.list-group-item.d-flex.justify-content-between.align-items-center
+          .d-flex.align-items-center
+            %div
+              %h5.mb-0 Battle ID: #{battle.id}
+              %small.text-muted Created At: #{battle.created_at.strftime('%Y-%m-%d %H:%M:%S')}
+          .d-flex.align-items-center
+            %span.badge.bg-success.me-2 Winner: #{battle.winner&.name || 'No Winner Yet'}
+            = link_to "View", battle_path(battle), class: "btn btn-sm btn-primary me-2"

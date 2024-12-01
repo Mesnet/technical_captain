@@ -6,12 +6,17 @@
       %h2.mb-0.flex-grow-1.text-center 🛡️ Create Your Battle ⚔️
 
     .card-body
-      = form_with model: @battle, local: true do |f|
-        .mb-3
-          %label.form-label.text-primary Select Fighters
-          = collection_check_boxes(:battle, :character_ids, Character.all, :id, :name) do |cb|
-            .form-check
-              = cb.check_box(class: "form-check-input")
-              = cb.label(class: "form-check-label")
-        .text-center.mt-4
-          = f.submit "⚔️ Start Battle ⚔️", class: "btn btn-success btn-lg w-100"
+      - if @characters.length < 2
+        .text-center
+          %p.lead.text-muted ⚠️ Not enought characters, please create some ⚠️
+          = link_to "🥷 Create Characters 🧜‍♀️", new_character_path, class: "btn btn-outline-primary"
+      - else
+        = form_with model: @battle, local: true do |f|
+          .mb-3
+            %label.form-label.text-primary Select Fighters
+            = collection_check_boxes(:battle, :character_ids, @characters, :id, :name) do |cb|
+              .form-check
+                = cb.check_box(class: "form-check-input")
+                = cb.label(class: "form-check-label")
+          .text-center.mt-4
+            = f.submit "⚔️ Start Battle ⚔️", class: "btn btn-success btn-lg w-100"

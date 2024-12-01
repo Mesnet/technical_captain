@@ -8,6 +8,7 @@ import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import * as bootstrap from "bootstrap";
 import initializeCharacterFormSliders from "../components/character_form_slider";
+import initializeSelectFightersForm from "../components/select_fighters_form";
 import "channels"
 
 Rails.start()
@@ -16,8 +17,9 @@ ActiveStorage.start()
 
 // Initialize the slider only when the character form is present
 document.addEventListener("turbolinks:load", () => {
-  const characterForm = document.querySelector("form[action*='characters']");
-  if (characterForm) {
+  if (document.querySelector("form[action*='characters']")) {
     initializeCharacterFormSliders();
+  } else if (document.querySelector("form[action*='battles']")){
+    initializeSelectFightersForm();
   }
 });
