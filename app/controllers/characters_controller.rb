@@ -8,6 +8,9 @@ class CharactersController < ApplicationController
 
   # GET /characters/1 or /characters/1.json
   def show
+    @total_fights = @character.fighters.count
+    wins = @character.fighters.where(winner: true).count
+    @win_rate = @total_fights > 0 ? (wins.to_f / @total_fights * 100).round(2) : 0
   end
 
   # GET /characters/new

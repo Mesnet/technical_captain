@@ -1,12 +1,10 @@
 class Battle < ApplicationRecord
   has_many :fighters, dependent: :destroy
   has_many :characters, through: :fighters
+  has_one :winning_fighter, -> { where(winner: true) }, class_name: 'Fighter'
+  has_one :winner, through: :winning_fighter, source: :character
 
   validate :must_have_at_least_two_fighters
-
-  def winner
-    fighters.find_by(winner: true)&.character
-  end
 
   private
 

@@ -9,21 +9,30 @@
 
     .card-body
       .row.text-center
-        .col-12.mb-3
-          %h5 ⚔️ Attack Points
-          %span.badge.bg-danger.text-white= @character.attack_points
+        .col-4.mb-3
+          .text-center
+          - if @character.avatar.attached?
+            %img{ src: url_for(@character.avatar), alt: "Avatar", class: "img-thumbnail border border-info mt-3", style: "max-width: 200px;" }
+          - else
+            %p No avatar uploaded
+        .col-4.mt-3
+          .col-12.mb-3
+            %h5 ⚔️ Attack Points
+            %span.badge.bg-danger.text-white= @character.attack_points
 
-        .col-12.mb-3
-          %h5 💖 Health Points
-          %span.badge.bg-success.text-white= @character.health
+          .col-12.mb-3
+            %h5 💖 Health Points
+            %span.badge.bg-success.text-white= @character.health
 
-        .col-12.mb-3
-          %h5 🎯 Precision
-          %span.badge.bg-warning.text-white= @character.precision
-
-      .text-center
-        %h5 🖼️ Avatar
-        - if @character.avatar.attached?
-          %img{ src: url_for(@character.avatar), alt: "Avatar", class: "img-thumbnail border border-info mt-3", style: "max-width: 200px;" }
-        - else
-          %p No avatar uploaded
+          .col-12.mb-3
+            %h5 🎯 Precision
+            %span.badge.bg-warning.text-white= @character.precision
+        .col-4.mb-3
+          .text-center
+            %h5.text-primary STATS
+            .mt-3
+              %p Total Fights:
+              %span.badge.bg-secondary.text-white= @total_fights
+            .mt-3
+              %p Winning Rate:
+              %span.badge.bg-primary.text-white= "#{@win_rate}%"

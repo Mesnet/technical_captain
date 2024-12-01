@@ -15,7 +15,9 @@
               - else
                 %span.badge.bg-secondary.me-3 No Avatar
               %div
-                %h5.mb-0= character.name
+                %h5.mb-0
+                  = character.name
+                  %small.text-muted.ms-2= "XP: #{character.battle_experience}"
                 %small.text-muted ⚔️ Attack: #{character.attack_points} | 💖 Health: #{character.health} | 🎯 Precision: #{character.precision}
             .d-flex.align-items-center
               = link_to "View", character_path(character), class: "btn btn-sm btn-primary me-2"

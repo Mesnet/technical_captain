@@ -14,7 +14,7 @@
 
       .row.justify-content-around.mt-4
         - @battle.fighters.each do |fighter|
-          .col-12.col-md-5.mb-4
+          .col-12.col-md-5.mb-4r
             .card.shadow
               .card-header.text-center
                 %h5= fighter.character.name
@@ -36,3 +36,12 @@
                 %p.text-muted
                   %strong 🎯 Precision:
                   = fighter.character.precision
+              - if fighter.weapons.any?
+                .card-footer
+                  - fighter.weapons.each do |weapon|
+                    .weapon-card.m-2.text-center
+                      - if weapon.icon.attached?
+                        %img{ src: url_for(weapon.icon), class: "img-thumbnail", style: "width: 50px; height: 50px;" }
+                      - else
+                        %span.badge.bg-secondary No Icon
+                      %p.mb-0= weapon.name

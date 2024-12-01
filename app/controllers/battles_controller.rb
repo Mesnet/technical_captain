@@ -3,11 +3,12 @@ class BattlesController < ApplicationController
 
   # GET /battles or /battles.json
   def index
-    @battles = Battle.includes(fighters: :character).order(created_at: :desc)
+    @battles = Battle.includes(:winner, fighters: :character).order(created_at: :desc)
   end
 
   # GET /battles/1 or /battles/1.json
   def show
+
   end
 
   # GET /battles/new
@@ -35,7 +36,7 @@ class BattlesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_battle
-      @battle = Battle.find(params[:id])
+      @battle = Battle.includes(fighters: :character).find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
