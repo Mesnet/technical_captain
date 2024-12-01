@@ -22,7 +22,7 @@
 
   .mb-3
     = f.label :precision, "🎯 Precision", class: "form-label"
-    %input#precision_slider{ type: "range", name: "character[precision]", min: 0, max: 120, value: @character.precision, class: "form-range" }
+    %input#precision_slider{ type: "range", name: "character[precision]", min: 0, max: 100, value: @character.precision, class: "form-range" }
     %span#precision_value.badge.bg-primary.text-white.mt-2= @character.precision
 
   .mb-3

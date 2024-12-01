@@ -1,14 +1,17 @@
-.container
-  %h1 New Battle
-  - if flash[:alert].present?
-    .alert.alert-danger= flash[:alert]
+.container-fluid.p-0.p-md-3.d-flex.flex-column.align-items-center
+  .card.shadow-lg.w-100.w-md-50.mt-3
+    .card-header.bg-primary.text-white.text-center.d-flex.justify-content-between.align-items-center
+      = link_to root_path, class: "text-white me-2" do
+        %i.bi.bi-arrow-left-circle.fs-3
+      %h2.mb-0.flex-grow-1.text-center 🛡️ Create Your Battle ⚔️
 
-  = form_with url: battles_path, local: true do |f|
-    %div
-      %label Select Characters
-      = collection_check_boxes(:battle, :character_ids, @characters, :id, :name) do |cb|
-        %div
-          = cb.check_box
-          = cb.label
-    %div.mt-3
-      = f.submit "Start Battle", class: "btn btn-primary"
+    .card-body
+      = form_with model: @battle, local: true do |f|
+        .mb-3
+          %label.form-label.text-primary Select Fighters
+          = collection_check_boxes(:battle, :character_ids, Character.all, :id, :name) do |cb|
+            .form-check
+              = cb.check_box(class: "form-check-input")
+              = cb.label(class: "form-check-label")
+        .text-center.mt-4
+          = f.submit "⚔️ Start Battle ⚔️", class: "btn btn-success btn-lg w-100"

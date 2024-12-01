@@ -11,7 +11,7 @@ development:
 
 test:
   <<: *default
-  database: battle_test
+  database: battle_test<%= ENV['TEST_ENV_NUMBER'] %>
 
 production:
   <<: *default

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_12_01_111337) do
+ActiveRecord::Schema[7.0].define(version: 2024_12_01_122255) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -56,6 +56,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_01_111337) do
     t.integer "precision", default: 60, null: false
   end
 
+  create_table "fighter_weapons", force: :cascade do |t|
+    t.bigint "fighter_id", null: false
+    t.bigint "weapon_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["fighter_id"], name: "index_fighter_weapons_on_fighter_id"
+    t.index ["weapon_id"], name: "index_fighter_weapons_on_weapon_id"
+  end
+
   create_table "fighters", force: :cascade do |t|
     t.bigint "character_id", null: false
     t.bigint "battle_id", null: false
@@ -66,8 +75,19 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_01_111337) do
     t.index ["character_id"], name: "index_fighters_on_character_id"
   end
 
+  create_table "weapons", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "health", default: 0, null: false
+    t.integer "attack_points", default: 0, null: false
+    t.integer "precision", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "fighter_weapons", "fighters"
+  add_foreign_key "fighter_weapons", "weapons"
   add_foreign_key "fighters", "battles"
   add_foreign_key "fighters", "characters"
 end
