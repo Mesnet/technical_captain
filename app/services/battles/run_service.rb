@@ -1,5 +1,5 @@
 # app/services/battles/run_battle_service.rb
-class Battles::RunBattleService
+class Battles::RunService
   def initialize(battle)
     @battle = battle
   end

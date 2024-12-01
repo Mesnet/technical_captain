@@ -14,21 +14,21 @@ class BattlesController < ApplicationController
   def new
     @battle = Battle.new
     @characters = Character.all
+    @weapons = Weapon.all
   end
 
   # POST /battles or /battles.json
   def create
-    @battle = Battle.new(battle_params)
+    service = Battles::CreateService.new(battle_params)
+    result = service.execute!
 
-    respond_to do |format|
-      if @battle.save
-        Battles::RunBattleService.new(@battle).execute!
-        format.html { redirect_to battle_url(@battle), notice: "Battle was successfully created." }
-        format.json { render :show, status: :created, location: @battle }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @battle.errors, status: :unprocessable_entity }
-      end
+    if result.success?
+      Battles::RunService.new(result.battle).execute!
+      redirect_to battle_path(result.battle), notice: "Battle was successfully created."
+    else
+      @characters = Character.all
+      @weapons = Weapon.all
+      redirect_to new_battle_path, alert: result.error
     end
   end
 
@@ -40,6 +40,6 @@ class BattlesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def battle_params
-      params.require(:battle).permit(character_ids: [])
+      params.require(:battle).permit(:fighters)
     end
 end

@@ -1,22 +1,45 @@
-.container-fluid.p-0.p-md-3.d-flex.flex-column.align-items-center
-  .card.shadow-lg.w-100.w-md-50.mt-3
+.container-fluid.p-0.p-md-3
+  .card.shadow-lg.w-100.w-md-75.mt-3
     .card-header.bg-primary.text-white.text-center.d-flex.justify-content-between.align-items-center
-      = link_to root_path, class: "text-white me-2" do
+      = link_to battles_path, class: "text-white me-2" do
         %i.bi.bi-arrow-left-circle.fs-3
       %h2.mb-0.flex-grow-1.text-center 🛡️ Create Your Battle ⚔️
 
     .card-body
       - if @characters.length < 2
         .text-center
-          %p.lead.text-muted ⚠️ Not enought characters, please create some ⚠️
+          %p.lead.text-muted ⚠️ Not enough characters, please create some ⚠️
           = link_to "🥷 Create Characters 🧜‍♀️", new_character_path, class: "btn btn-outline-primary"
       - else
-        = form_with model: @battle, local: true do |f|
-          .mb-3
-            %label.form-label.text-primary Select Fighters
-            = collection_check_boxes(:battle, :character_ids, @characters, :id, :name) do |cb|
-              .form-check
-                = cb.check_box(class: "form-check-input")
-                = cb.label(class: "form-check-label")
-          .text-center.mt-4
-            = f.submit "⚔️ Start Battle ⚔️", class: "btn btn-success btn-lg w-100"
+        = form_with model: @battle, url: battles_path, local: true, html: { id: "battle-form" } do |f|
+          - if @battle.errors.any?
+            .alert.alert-danger
+              %h4 There were errors with your submission:
+              %ul
+                - @battle.errors.full_messages.each do |message|
+                  %li= message
+
+          = f.hidden_field :fighters, value: [].to_json, id: "fighters-input"
+          .row.justify-content-center
+            - @characters.each do |character|
+              .col-12.col-md-2.mb-2
+                .card.shadow-lg.character-card{ data: { character_id: character.id } }
+                  .card-body.text-center
+                    .clickable.m-1.character-select{ data: { character_id: character.id } }
+                      %div.text-center
+                        %h5.mb-0= character.name
+                        - if character.avatar.attached?
+                          %img{ src: url_for(character.avatar), alt: "Avatar", style: "width: 100px; height: 100px;" }
+                        - else
+                          %p No avatar uploaded
+
+                    .second_part.pt-4.weapons-container{ data: { character_id: character.id } }
+                      - @weapons.each do |weapon|
+                        .weapon-btn.btn.m-1{ data: { weapon_id: weapon.id, character_id: character.id }, disabled: true }
+                          - if weapon.icon.attached?
+                            %img{ src: url_for(weapon.icon), alt: weapon.name, style: "width: 50px; height: 50px;" }
+                          - else
+                            %span No Icon
+
+          .text-center.mt-3
+            = f.submit "⚔️ Start Battle ⚔️", class: "btn btn-success btn-lg", id: "start-battle-btn", disabled: true
