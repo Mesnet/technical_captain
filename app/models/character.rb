@@ -2,7 +2,7 @@ class Character < ApplicationRecord
   has_many :fighters
   has_many :battles, through: :fighters
 
-	has_one_attached :avatar
+  has_one_attached :avatar
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
   validates :health, :attack_points, :precision, numericality: { greater_than: 0 }

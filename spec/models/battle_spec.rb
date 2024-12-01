@@ -9,17 +9,6 @@ RSpec.describe Battle, type: :model do
   describe 'validations' do
     let(:battle) { build(:battle) }
 
-    # context 'when there are fewer than two fighters' do
-    #   it 'is invalid' do
-    #     character = create(:character)
-    #     battle = create(:battle) # Persist the battle
-    #     battle.fighters.create(character: character) # Persist the fighter
-
-    #     battle.validate # Trigger validation
-    #     expect(battle.errors[:fighters]).to include('must have at least two fighters to start a battle')
-    #   end
-    # end
-
     context 'when there are at least two fighters' do
       it 'is valid' do
         character1 = create(:character)

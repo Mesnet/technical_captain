@@ -3,7 +3,7 @@ FactoryBot.define do
     name { Faker::Games::Zelda.item } # Example: "Master Sword" (use Faker for fun names)
     health { Faker::Number.between(from: 0, to: 100) }
     attack_points { Faker::Number.between(from: 0, to: 100) }
-    precision { Faker::Number.between(from: 0, to: 120) }
+    precision { Faker::Number.between(from: 0, to: 100) }
 
     trait :with_icon do
       after(:build) do |weapon|

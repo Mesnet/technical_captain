@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Character, type: :model do
   describe 'validations' do
-    let(:character) { Character.new(name: "Hero", health: 60, attack_points: 60, precision: 60) }
+    let(:character) { create(:character) }
+
 
     it 'is valid with valid attributes' do
       expect(character).to be_valid
@@ -15,8 +16,8 @@ RSpec.describe Character, type: :model do
     end
 
     it 'is invalid with a duplicate name (case insensitive)' do
-      Character.create!(name: "Hero", health: 60, attack_points: 60, precision: 60)
-      duplicate_character = Character.new(name: "hero", health: 60, attack_points: 60, precision: 60)
+      original_character =  create(:character, name: "HERO")
+      duplicate_character = Character.new(name: "HERO", health: 60, attack_points: 60, precision: 60)
       expect(duplicate_character).not_to be_valid
       expect(duplicate_character.errors[:name]).to include("has already been taken")
     end

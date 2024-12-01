@@ -13,6 +13,7 @@ class Battles::RunService
   private
 
   def select_winner!
+    # This is the place where you could implement a more complex logic to select the winner.
     winner = @battle.fighters.sample
     winner.update!(winner: true)
   end
